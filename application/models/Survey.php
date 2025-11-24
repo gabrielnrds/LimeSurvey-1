@@ -145,6 +145,7 @@ use LimeSurvey\PluginManager\PluginEvent;
  * @property SurveyLanguageSetting $defaultlanguage
  * @property SurveysGroups $surveygroup
  * @property boolean $isDateExpired Whether survey is expired depending on the current time and survey configuration status
+ * @property integer $projectid which project this survey belongs to
  * @method mixed active()
  */
 class Survey extends LSActiveRecord implements PermissionInterface
@@ -238,7 +239,8 @@ class Survey extends LSActiveRecord implements PermissionInterface
     public function attributeLabels()
     {
         return array(
-            'running' => gT('running')
+            'running' => gT('running'),
+            'projectid' => 'Projeto',
         );
     }
 
@@ -468,7 +470,8 @@ class Survey extends LSActiveRecord implements PermissionInterface
             'surveygroup' => array(self::BELONGS_TO, 'SurveysGroups', array('gsid' => 'gsid')),
             'surveysettings' => array(self::BELONGS_TO, SurveysGroupsettings::class, array('gsid' => 'gsid')),
             'templateModel' => array(self::HAS_ONE, 'Template', array('name' => 'template')),
-            'templateConfiguration' => array(self::HAS_ONE, 'TemplateConfiguration', array('sid' => 'sid'))
+            'templateConfiguration' => array(self::HAS_ONE, 'TemplateConfiguration', array('sid' => 'sid')),
+            'project' => array(self::BELONGS_TO, 'Projects', 'projectid'),
         );
     }
 
